@@ -1,0 +1,13 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:colorBackground">@color/white_smoke</item>
+        <item name="android:background">@color/white_smoke</item>
+        <item name="colorPrimary">@color/white_smoke</item>
+        <item name="colorPrimaryDark">@color/white_smoke</item>
+        <item name="colorAccent">@color/chinook</item>
+    </style>
+
+</resources>

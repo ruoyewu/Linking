@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wuruoye.linking2.MainActivity"
+    android:baselineAligned="false">
+
+    <FrameLayout
+        android:id="@+id/fl_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.wuruoye.linking2.widget.ShineTextView
+            android:id="@+id/stv_start"
+            android:text="开始游戏"
+            android:textSize="25sp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:targetApi="lollipop" />
+        <com.wuruoye.linking2.widget.ShineTextView
+            android:id="@+id/stv_step"
+            android:text="关卡模式"
+            android:textSize="25sp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <com.wuruoye.linking2.widget.ShineTextView
+            android:id="@+id/stv_setting"
+            android:text="游戏设置"
+            android:textSize="25sp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

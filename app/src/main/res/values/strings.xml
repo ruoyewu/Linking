@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Linking2</string>
+
+    <string name="translate_start_link">start_link</string>
+</resources>
