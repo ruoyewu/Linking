@@ -7,9 +7,8 @@ package com.wuruoye.linking2.utils;
  */
 
 public class RandomUtil {
-    public static int[][] getNum(int x, int y){
+    public static int[][] getNum(int x, int y, int max){
         int min = 1;
-        int max = 11;
         int num[][] = new int[x][y];
         for (int i = 1; i < x - 1; i ++){
             for (int j = 1; j < y - 1; j ++){

@@ -21,28 +21,32 @@
         android:layout_marginBottom="100dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <com.wuruoye.linking2.widget.ShineTextView
             android:id="@+id/stv_start"
-            android:text="开始游戏"
-            android:textSize="25sp"
-            android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:targetApi="lollipop" />
+            android:padding="10dp"
+            android:text="开始游戏"
+            android:textSize="25sp"
+            tools:ignore="UnusedAttribute" />
+
         <com.wuruoye.linking2.widget.ShineTextView
             android:id="@+id/stv_step"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="关卡模式"
             android:textSize="25sp"
-            android:padding="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            tools:ignore="UnusedAttribute" />
         <com.wuruoye.linking2.widget.ShineTextView
             android:id="@+id/stv_setting"
             android:text="游戏设置"
             android:textSize="25sp"
             android:padding="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:ignore="UnusedAttribute"/>
     </LinearLayout>
 
 

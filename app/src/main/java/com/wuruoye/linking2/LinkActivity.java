@@ -19,6 +19,8 @@ public class LinkActivity extends BaseActivity implements LinkingView.OnLinkGame
     private LinkingCache linkingCache;
     private int timePast;
     private int timeLeft;
+    private boolean isStep;
+    private int stepNow = 0;
 
     private FrameLayout flGame;
     private TextView tvTimeLeft;
@@ -32,6 +34,7 @@ public class LinkActivity extends BaseActivity implements LinkingView.OnLinkGame
 
     @Override
     protected void initData(Bundle bundle) {
+        isStep = bundle.getBoolean("isStep");
         linkingCache = new LinkingCache(getApplicationContext());
         timePast = 0;
         timeLeft = 60;
@@ -42,7 +45,13 @@ public class LinkActivity extends BaseActivity implements LinkingView.OnLinkGame
         flGame = (FrameLayout) findViewById(R.id.fl_link_game);
         tvTimeLeft = (TextView) findViewById(R.id.tv_time_left);
 
-        linkingView = new LinkingView(this,this,linkingCache.getXNum(),linkingCache.getYNum());
+        if (!isStep) {
+            linkingView = new LinkingView(this,this,linkingCache.getXNum(),
+                    linkingCache.getYNum(),11);
+        }else {
+            linkingView = new LinkingView(this,this,linkingCache.getXNum(),
+                    linkingCache.getYNum(),stepArray[stepNow]);
+        }
         flGame.addView(linkingView);
 
         timeGo();
@@ -83,7 +92,7 @@ public class LinkActivity extends BaseActivity implements LinkingView.OnLinkGame
                     public void onClick(DialogInterface dialog, int which) {
                         timePast = 0;
                         timeLeft = 60;
-                        linkingView.resetLink(linkingCache.getXNum(),linkingCache.getYNum());
+                        linkingView.resetLink(linkingCache.getXNum(),linkingCache.getYNum(),11);
                     }
                 })
                 .setNegativeButton("退出游戏！", new DialogInterface.OnClickListener() {
@@ -97,35 +106,39 @@ public class LinkActivity extends BaseActivity implements LinkingView.OnLinkGame
 
     @Override
     public void onGameOver() {
-        boolean isOver = false;
-        if (timePast < linkingCache.getBestTime() || linkingCache.getBestTime() == LinkingCache.TIME_BEST_DEFAULT){
-            isOver = true;
-            linkingCache.saveBestTime(timePast);
-        }
+        if (!isStep) {
+            boolean isOver = false;
+            if (timePast < linkingCache.getBestTime() || linkingCache.getBestTime() == LinkingCache.TIME_BEST_DEFAULT){
+                isOver = true;
+                linkingCache.saveBestTime(timePast);
+            }
 
-        if (alertDialog == null){
-            alertDialog = new AlertDialog.Builder(this)
-                    .setTitle("游戏结束，是否重新开始?")
-                    .setCancelable(false)
-                    .setPositiveButton("重新开始!", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            linkingView.resetLink(linkingCache.getXNum(),linkingCache.getYNum());
-                            timePast = 0;
-                            timeLeft = 60;
-                        }
-                    })
-                    .setNegativeButton("退出!", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    });
+            if (alertDialog == null){
+                alertDialog = new AlertDialog.Builder(this)
+                        .setTitle("游戏结束，是否重新开始?")
+                        .setCancelable(false)
+                        .setPositiveButton("重新开始!", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                linkingView.resetLink(linkingCache.getXNum(),linkingCache.getYNum(),11);
+                                timePast = 0;
+                                timeLeft = 60;
+                            }
+                        })
+                        .setNegativeButton("退出!", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+            }
+            if (isOver){
+                alertDialog.setTitle("恭喜你破纪录了！此次通关 " + timePast + " 秒！");
+            }
+            alertDialog.show();
+        }else {
+            linkingView.resetLink(linkingCache.getXNum(),linkingCache.getYNum(),stepArray[stepNow++]);
         }
-        if (isOver){
-            alertDialog.setTitle("恭喜你破纪录了！此次通关 " + timePast + " 秒！");
-        }
-        alertDialog.show();
     }
 
     @Override
@@ -133,4 +146,8 @@ public class LinkActivity extends BaseActivity implements LinkingView.OnLinkGame
         timeLeft += 5;
         tvTimeLeft.setText(String.valueOf(timeLeft));
     }
+
+    private static final int[] stepArray = new int[]{
+            4,5,6,7,8,9,10,11
+    };
 }

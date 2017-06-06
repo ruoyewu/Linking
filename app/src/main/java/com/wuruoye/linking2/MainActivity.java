@@ -47,10 +47,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.stv_start:{
-                startActivity(new Intent(this,LinkActivity.class));
+                Intent intent = new Intent(this,LinkActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("isStep",false);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }break;
             case R.id.stv_step:{
-                Toast.makeText(this, "关卡模式", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "关卡模式", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this,LinkActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("isStep",true);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }break;
             case R.id.stv_setting:{
                 startActivity(new Intent(this,SettingActivity.class));

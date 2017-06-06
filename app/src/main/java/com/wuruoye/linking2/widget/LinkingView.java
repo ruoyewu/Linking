@@ -40,6 +40,7 @@ public class LinkingView extends SurfaceView implements SurfaceHolder.Callback {
     private int[] end = new int[2];
     private int xNum;
     private int yNum;
+    private int stepSize;
     private boolean isDrawing = false;
     private List<Integer> mPath;
     private PathMeasure mPathMeasure;
@@ -47,8 +48,9 @@ public class LinkingView extends SurfaceView implements SurfaceHolder.Callback {
 
     private OnLinkGameListener linkGameListener;
 
-    public void resetLink(int x, int y){
-        getRandomNum(x,y);
+    public void resetLink(int x, int y,int stepSize){
+        this.stepSize = stepSize;
+        getRandomNum(x,y,stepSize);
         mCanvas = mHolder.lockCanvas();
         drawBox();
         mHolder.unlockCanvasAndPost(mCanvas);
@@ -75,7 +77,7 @@ public class LinkingView extends SurfaceView implements SurfaceHolder.Callback {
         mPaint = new Paint();
         mPaint.setStrokeWidth(10);
 
-        getRandomNum(xNum,yNum);
+        getRandomNum(xNum,yNum,stepSize);
         background = ActivityCompat.getColor(getContext(), R.color.white_smoke);
     }
 
@@ -304,8 +306,8 @@ public class LinkingView extends SurfaceView implements SurfaceHolder.Callback {
         return mPath != null;
     }
 
-    private void getRandomNum(int x, int y){
-        num = RandomUtil.getNum(x,y);
+    private void getRandomNum(int x, int y, int stepSize){
+        num = RandomUtil.getNum(x,y,stepSize);
     }
 
     public interface OnLinkGameListener {
@@ -313,11 +315,12 @@ public class LinkingView extends SurfaceView implements SurfaceHolder.Callback {
         void onLinked();
     }
 
-    public LinkingView(Context context, OnLinkGameListener linkGameListener, int x, int y) {
+    public LinkingView(Context context, OnLinkGameListener linkGameListener, int x, int y, int stepSize) {
         super(context);
         this.linkGameListener = linkGameListener;
         xNum = x;
         yNum = y;
+        this.stepSize = stepSize;
         initAll();
     }
 
