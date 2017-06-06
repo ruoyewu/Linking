@@ -39,6 +39,18 @@ public class RandomUtil {
         return num;
     }
 
+    public static int[][] getNum(int[][] num, int max){
+        int min = 1;
+        for (int i = 0; i < num.length; i++) {
+            for (int j = 0; j < num[i].length; j++) {
+                if (num[i][j] != 0){
+                    num[i][j] = getRandom(min,max);
+                }
+            }
+        }
+        return num;
+    }
+
     private static int[] getPosition(int n, int[][] num){
         for (int i = 0; i < num.length; i ++){
             for (int j = 0; j < num[i].length; j ++){

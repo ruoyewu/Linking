@@ -56,6 +56,13 @@ public class LinkingView extends SurfaceView implements SurfaceHolder.Callback {
         mHolder.unlockCanvasAndPost(mCanvas);
     }
 
+    public void refresh(){
+        num = RandomUtil.getNum(num, stepSize);
+        mCanvas = mHolder.lockCanvas();
+        drawBox();
+        mHolder.unlockCanvasAndPost(mCanvas);
+    }
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         aLength = mWidth / xNum;

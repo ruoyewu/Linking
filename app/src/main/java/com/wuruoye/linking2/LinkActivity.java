@@ -3,7 +3,9 @@ package com.wuruoye.linking2;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wuruoye.linking2.base.BaseActivity;
@@ -15,7 +17,7 @@ import com.wuruoye.linking2.widget.LinkingView;
  * this file is to do
  */
 
-public class LinkActivity extends BaseActivity implements LinkingView.OnLinkGameListener{
+public class LinkActivity extends BaseActivity implements LinkingView.OnLinkGameListener, View.OnClickListener{
     private LinkingCache linkingCache;
     private int timePast;
     private int timeLeft;
@@ -24,6 +26,7 @@ public class LinkActivity extends BaseActivity implements LinkingView.OnLinkGame
 
     private FrameLayout flGame;
     private TextView tvTimeLeft;
+    private ImageView ivRefresh;
     private LinkingView linkingView;
     private AlertDialog.Builder alertDialog;
 
@@ -44,6 +47,9 @@ public class LinkActivity extends BaseActivity implements LinkingView.OnLinkGame
     protected void initView() {
         flGame = (FrameLayout) findViewById(R.id.fl_link_game);
         tvTimeLeft = (TextView) findViewById(R.id.tv_time_left);
+        ivRefresh = (ImageView) findViewById(R.id.iv_refresh);
+
+        ivRefresh.setOnClickListener(this);
 
         if (!isStep) {
             linkingView = new LinkingView(this,this,linkingCache.getXNum(),
@@ -104,6 +110,19 @@ public class LinkActivity extends BaseActivity implements LinkingView.OnLinkGame
                 .show();
     }
 
+    private void refreshLink(){
+        linkingView.refresh();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_refresh:{
+                refreshLink();
+            }break;
+        }
+    }
+
     @Override
     public void onGameOver() {
         if (!isStep) {
@@ -150,4 +169,5 @@ public class LinkActivity extends BaseActivity implements LinkingView.OnLinkGame
     private static final int[] stepArray = new int[]{
             4,5,6,7,8,9,10,11
     };
+
 }
