@@ -38,6 +38,8 @@ public class LinkingView extends SurfaceView implements SurfaceHolder.Callback {
     private int[][] num;
     private int[] start;
     private int[] end = new int[2];
+    private int[] tipStart = new int[2];
+    private int[] tipEnd = new int[2];
     private int xNum;
     private int yNum;
     private int stepSize;
@@ -61,6 +63,12 @@ public class LinkingView extends SurfaceView implements SurfaceHolder.Callback {
         mCanvas = mHolder.lockCanvas();
         drawBox();
         mHolder.unlockCanvasAndPost(mCanvas);
+    }
+
+    public void showTip(){
+        if (findTip()){
+            drawTip();
+        }
     }
 
     @Override
@@ -277,12 +285,6 @@ public class LinkingView extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
-    private void clear(Canvas canvas){
-        mPaint.setColor(background);
-        mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        canvas.drawRect(0,0,mWidth,mHeight,mPaint);
-    }
-
     private void onTouch(float x, float y){
         int xT = (int) (x / aLength);
         int yT = (int) (y / aLength);
@@ -315,6 +317,43 @@ public class LinkingView extends SurfaceView implements SurfaceHolder.Callback {
 
     private void getRandomNum(int x, int y, int stepSize){
         num = RandomUtil.getNum(x,y,stepSize);
+    }
+
+    private boolean findTip(){
+        boolean isTip = false;
+        for (int i = 0; i < xNum; i ++){
+            for (int j = 0; j < yNum; j ++){
+                if (isTip)
+                    break;
+                if (num[i][j] > 0) {
+                    tipStart[0] = i;
+                    tipStart[1] = j;
+                    for (int k = i; k < xNum; k ++){
+                        for (int l = j + 1; l < yNum; l ++){
+                            if (isTip)
+                                break;
+                            if (num[k][l] > 0) {
+                                tipEnd[0] = k;
+                                tipEnd[1] = l;
+                                if (isLink(num,tipStart,tipEnd)){
+                                    isTip = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return isTip;
+    }
+
+    private void drawTip(){
+        mCanvas = mHolder.lockCanvas();
+        drawBox();
+        drawFrame(tipStart[0], tipStart[1], true);
+        drawFrame(tipEnd[0], tipEnd[1], true);
+        mHolder.unlockCanvasAndPost(mCanvas);
     }
 
     public interface OnLinkGameListener {

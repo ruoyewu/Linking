@@ -23,6 +23,7 @@ public class LinkActivity extends BaseActivity implements LinkingView.OnLinkGame
     private int timeLeft;
     private boolean isStep;
     private int stepNow = 0;
+    private int tipLast = 0;
 
     private FrameLayout flGame;
     private TextView tvTimeLeft;
@@ -75,6 +76,10 @@ public class LinkActivity extends BaseActivity implements LinkingView.OnLinkGame
                         Thread.sleep(1000);
                         timeLeft --;
                         timePast ++;
+                        tipLast ++;
+                        if (tipLast >= 10){
+                            linkingView.showTip();
+                        }
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -163,6 +168,7 @@ public class LinkActivity extends BaseActivity implements LinkingView.OnLinkGame
     @Override
     public void onLinked() {
         timeLeft += 5;
+        tipLast = 0;
         tvTimeLeft.setText(String.valueOf(timeLeft));
     }
 
